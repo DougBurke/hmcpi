@@ -34,6 +34,8 @@ import Control.Concurrent (forkIO)
 import Control.Monad (when)
 import Control.Proxy
 
+import Data.Version (showVersion)
+
 import Network (PortID (..), connectTo)
 
 import System.Environment (getArgs, getProgName)
@@ -42,6 +44,8 @@ import System.IO ( BufferMode(LineBuffering), Handle
                  , hClose, hIsTerminalDevice
                  , hPutStrLn, hSetBuffering
                  , stderr, stdin, stdout )
+
+import Paths_mcpi (version)
 
 -- | Link together the two handles, so that content
 --   moves from the first to the second.
@@ -106,5 +110,7 @@ usage = do
 main :: IO ()
 main = do
   args <- getArgs
-  if null args then mcpi else usage
+  if null args
+    then putStrLn ("HMCPI - version " ++ showVersion version) >> mcpi
+    else usage
 

@@ -94,6 +94,7 @@ Executable         hmcpi
 
    Main-Is:        HMCPI.hs
    Hs-Source-Dirs: examples/ 
+   Other-Modules:  Paths_mcpi
 
    ghc-options:
       -Wall
