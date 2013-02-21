@@ -103,7 +103,7 @@ Executable         hmcpi
    Build-Depends:
       base,
       network,
-      pipes == 3.1.*
+      pipes >= 3.0 && < 3.2
 
 Executable         isongold
    if !flag(build-examples)
