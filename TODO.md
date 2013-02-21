@@ -11,21 +11,27 @@ rotation and translation.
 
 Should we have something like the following?
 
-  data BlockInfo = BlockInfo BlockData (Maybe BlockType)
+```haskell
+data BlockInfo = BlockInfo BlockData (Maybe BlockType)
+```
 
 * Representing shapes
 
 Since the existing rendering functions create either a position or a
 cuboid, does it make sense to encode this as something like
 
-  data Shape = BlockList BlockInfo [IPos]
-             | BlockCuboid BlockInfo IPos IPos
+```haskell
+data Shape = BlockList BlockInfo [IPos]
+           | BlockCuboid BlockInfo IPos IPos
+```
 
-so that we can then write
+so that we can then write routines like
 
-  draw :: [Shape] -> MCPI ()
-  xshift :: Int -> [Shape] -> Shape]
-  data Circle = Circle { circleShape :: [Shape], ... }
+```haskell
+draw :: [Shape] -> MCPI ()
+xshift :: Int -> [Shape] -> [Shape]
+data Circle = Circle { circleShape :: [Shape], ... }
+```
 
 * Is the current MCPI monad sufficient?
 
