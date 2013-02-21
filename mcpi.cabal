@@ -10,7 +10,8 @@ Category:       network, raspberrypi, minecraft
 Synopsis:       Connect to MineCraft running on a Raspberry PI.
 Description:
   The MineCraft edition for Raspberry PI comes with a Java and
-  Python API.
+  Python API. See "Network.MineCraft.Pi.Client" for a basic
+  example.
   .
   This is a *very* basic, and *incomplete* Haskell version. I
   fully expect everything to change in later versions.
