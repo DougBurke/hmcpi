@@ -41,7 +41,7 @@ Flag build-examples
 Library
    Build-Depends:
       base >=3 && < 5,
-      network == 2.3.*,
+      network >= 2.3 && < 2.5,
       split == 0.2.*,
       transformers == 0.3.*
 
