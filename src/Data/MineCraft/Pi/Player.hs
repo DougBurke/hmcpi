@@ -9,7 +9,7 @@
 --
 -- Players in MineCraft.
 --
--- *Note* this module currently does not support multiple players.
+-- /Note:/ This module currently does not support multiple players.
 --
 --------------------------------------------------------------------------------
 
@@ -31,7 +31,7 @@ import Data.MineCraft.Pi.Types
 import Network.MineCraft.Pi.Client
 import Network.MineCraft.Pi.Client.Internal
 
--- | Where is the user. See also `getPlayerPos`.
+-- | Where is the user? See also `getPlayerPos`.
 getPlayerTile :: MCPI IPos 
 getPlayerTile = fromMC `liftM` query "player.getTile" []
 
@@ -39,11 +39,11 @@ getPlayerTile = fromMC `liftM` query "player.getTile" []
 setPlayerTile :: IPos -> MCPI ()
 setPlayerTile pos = command "player.setTile" [toMC pos]
 
--- | Where is the user. See also `getPlayerPos`.
+-- | Where is the user? See also `getPlayerTile`.
 getPlayerPos :: MCPI FPos
 getPlayerPos = fromMC `liftM` query "player.getPos" []
 
--- | Move the user. See also `setPlayerPos`.
+-- | Move the user. See also `setPlayerTile`.
 setPlayerPos :: FPos -> MCPI ()
 setPlayerPos pos = command "player.setPos" [toMC pos]
 

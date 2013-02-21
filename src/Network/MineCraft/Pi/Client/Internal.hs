@@ -10,7 +10,7 @@
 --  Portability :  RecordWildCards
 --
 -- Internal types for connecting to the Raspberry-PI version
--- of MineCraft. Most users are expected to use 'Network.MineCraft.Pi.Client'
+-- of MineCraft. Most users are expected to use "Network.MineCraft.Pi.Client"
 -- rather than this module, but it is provided in case the former
 -- is not sufficient.
 --

@@ -8,17 +8,47 @@
 --  Portability :  Haskell 98
 --
 -- The main interface for connecting to the Raspberry-PI version
--- of MineCraft. The 'Network.MineCraft.Pi.Client.Internal' module
+-- of MineCraft. The "Network.MineCraft.Pi.Client.Internal" module
 -- provides lower-level access in case this module in insufficient.
 --
--- There are two types of calls to MineCraft: "command" and "query".
+-- There are two types of calls to MineCraft: \"command\" and \"query\".
 -- Commands change the state of the server and do not return anything,
 -- queries return information from the server, and presumably does not
--- change the server state. This terminology may change.
+-- change the server state. This terminology may change. At present
+-- there is no check that the call succeeded.
 --
--- I am not sure the use of the @FromMineCraft@ and @ToMineCraft@
--- type classes is justified, given that the API has a very limited
--- set of types.
+-- Example:
+--
+-- In this example we move the player 10 tiles in the X direction,
+-- as long as the tile is empty (there is /no/ check that there
+-- is anything to stand on).
+--
+-- > {-# LANGUAGE RecordWildCards #-}
+-- >
+-- > module Main where
+-- >
+-- > import Control.Monad (when)
+-- >
+-- > import Data.MineCraft.Pi.Block 
+-- > import Data.MineCraft.Pi.Player
+-- > import Data.MineCraft.Pi.Other
+-- > import Data.MineCraft.Pi.Types
+-- >
+-- > import Network.MineCraft.Pi.Client
+-- >
+-- > -- | Move the player by 10 tiles in the X direction,
+-- > --   if it is not filled.
+-- > movePlayer :: MCPI ()
+-- > movePlayer = do
+-- >     Pos {..} <- getPlayerTile
+-- >     let newPos = Pos (_x+10) _y _z
+-- >     bType <- getBlock newPos
+-- >     when (bType == air) $ do
+-- >       setPlayerTile newPos
+-- >       chatPost "*jump*"
+-- >
+-- > main :: IO ()
+-- > main = runMCPI movePlayer
 --
 --------------------------------------------------------------------------------
 
@@ -27,6 +57,11 @@ module Network.MineCraft.Pi.Client
     , runMCPI
 
     -- * Conversion routines
+    --
+    -- | I am not sure the use of the `FromMineCraft` and `ToMineCraft`
+    --   type classes is justified, given that the API has a very limited
+    --   set of types.
+    --
     , FromMineCraft(..)
     , ToMineCraft(..)
 
@@ -45,7 +80,7 @@ import Network.MineCraft.Pi.Client.Internal
 class FromMineCraft a where
   fromMC :: String -> a
 
--- | Send a value to MineCraft.
+-- | Convert a value into a form that can be sent to MineCraft.
 class ToMineCraft a where
   toMC :: a -> String
 

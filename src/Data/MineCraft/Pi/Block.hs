@@ -10,7 +10,8 @@
 -- Block handling.
 --
 -- It probably makes sense for the block types in
--- @Data.MineCraftg.Pi.Types@ - namely @BlockType@ and @BlockData@
+-- "Data.MineCraft.Pi.Types" - namely `Data.MineCraft.Pi.Types.BlockType`
+-- and `Data.MineCraft.Pi.Types.BlockData`
 -- to be moved into this module.
 --
 -- See <http://www.minecraftwiki.net/wiki/Data_values_(Pocket_Edition)> and
@@ -32,8 +33,11 @@ module Data.MineCraft.Pi.Block
     , setBlocks
     , setBlocksData
 
-      -- * Blocks
+      -- * Utilities
+
     , showBlock
+
+      -- * Block types
     , air
     , stone
     , grass
@@ -115,7 +119,7 @@ import Data.MineCraft.Pi.Types
 import Network.MineCraft.Pi.Client
 import Network.MineCraft.Pi.Client.Internal
 
--- | Block types.
+-- | A type of a block.
 air, stone, grass, dirt, cobblestone,
   woodPlanks, sapling, bedrock, water,
   waterStationary, lava, lavaStationary, sand,

@@ -9,7 +9,7 @@
 --
 -- Handle the camera position.
 --
--- *Note* At present this module does not handle multiple users.
+-- /Note:/ At present this module does not handle multiple users.
 --
 --------------------------------------------------------------------------------
 

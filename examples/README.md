@@ -54,3 +54,12 @@ completion of commands, or cleaning user input.
 Note that this program does not take use the hmcpi library, since it
 is a low-level interface.
 
+*) xjump
+
+Source code: XJump.hs
+
+Usage:
+  xjump
+
+Move the player by 10 tiles in the X direction if the tile is not
+filled.
