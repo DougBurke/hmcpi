@@ -1,14 +1,22 @@
+Example programs
+================
 
 There are several programs, illustrating some very *basic*
 interactions with MineCraft-PI.
 
-*) freefall
+When called with the --debug argument the programs will print,
+to stderr, the messages they send to, and receive from, the
+MineCraft program. This is true for all the examples except for
+hmcpi.
+
+freefall
+--------
 
 Source code: Freefall.hs 
 
 Usage:
-  freefall
-  freefall jump
+
+    freefall [--debug] [jump]
 
 Increase the height of the player by jump blocks. If not specified the
 jump is 100 blocks. A check is made to ensure that the jump does not
@@ -19,13 +27,14 @@ There is no check that jump is valid (e.g. is positive, or not so
 great that it exceeds the limits of the world), but this could be
 added quite easily.
  
-*) flatten
+flatten
+-------
 
 Source code: Flatten.hs 
 
 Usage:
-  flatten
-  flatten radius
+
+    flatten [--debug] [radius]
 
 Flatten the area surrounding the user, converting the floor into gold
 and removing any blocks above it. The area converted is a circle of
@@ -36,13 +45,15 @@ of, behind, and to the side of the player.
 There is no check that the blocks that are added are actually
 supported, although this could be added by an enterprising programmer.
 
-*) hmcpi
+hmcpi
+-----
 
 Source code: HMCPI.hs
 
 Usage:
-  hmcpi
-  hmcpi < filename
+
+    hmcpi
+    hmcpi < filename
 
 This provides a direct interface to MineCraft-PI. You enter the full
 commands, such as chat.post(Hello World!) or world.getBlock(0,0,0),
@@ -54,12 +65,25 @@ completion of commands, or cleaning user input.
 Note that this program does not take use the hmcpi library, since it
 is a low-level interface.
 
-*) xjump
+isongold
+--------
+
+Source code: IsOnGold.hs
+
+Usage:
+
+    isongold [--debug]
+
+Tells the user to look down if they are standing on a gold ore block.
+
+xjump
+-----
 
 Source code: XJump.hs
 
 Usage:
-  xjump
+
+    xjump [--debug]
 
 Move the player by 10 tiles in the X direction if the tile is not
 filled.

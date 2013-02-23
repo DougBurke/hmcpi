@@ -1,5 +1,5 @@
 Name:           mcpi
-Version:        0.0.0.2
+Version:        0.0.0.3
 Homepage:       https://github.com/DougBurke/hmcpi
 Bug-Reports:    https://github.com/DougBurke/hmcpi/issues
 Stability:      experimental
@@ -66,6 +66,9 @@ Executable         flatten
    Main-Is:        Flatten.hs
    Hs-Source-Dirs: examples/ 
 
+   Other-Modules:  Paths_mcpi
+                   Utils
+
    ghc-options:
       -Wall
 
@@ -81,6 +84,9 @@ Executable         freefall
    Main-Is:        Freefall.hs
    Hs-Source-Dirs: examples/ 
 
+   Other-Modules:  Paths_mcpi
+                   Utils
+
    ghc-options:
       -Wall
 
@@ -95,7 +101,9 @@ Executable         hmcpi
 
    Main-Is:        HMCPI.hs
    Hs-Source-Dirs: examples/ 
+
    Other-Modules:  Paths_mcpi
+                   Utils
 
    ghc-options:
       -Wall
@@ -112,6 +120,9 @@ Executable         isongold
    Main-Is:        IsOnGold.hs
    Hs-Source-Dirs: examples/ 
 
+   Other-Modules:  Paths_mcpi
+                   Utils
+
    ghc-options:
       -Wall
 
@@ -125,6 +136,9 @@ Executable         xjump
 
    Main-Is:        XJump.hs
    Hs-Source-Dirs: examples/ 
+
+   Other-Modules:  Paths_mcpi
+                   Utils
 
    ghc-options:
       -Wall

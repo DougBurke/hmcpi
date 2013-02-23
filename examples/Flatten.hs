@@ -11,7 +11,7 @@ Douglas Burke (dburke.gw@gmail.com)
 
 Usage:
 
-  ./flatten [<radius>]
+  ./flatten [--debug] [<radius>]
 
 Convert all blocks within the given distance of the player,
 and at a height one below that of the player, to gold.
@@ -29,18 +29,21 @@ module Main where
 import Control.Monad (forM_, when)
 import Control.Monad.IO.Class
 
-import Data.Maybe (listToMaybe)
-
-import System.Environment
-import System.Exit
-import System.IO
-
 import Data.MineCraft.Pi.Block
 import Data.MineCraft.Pi.Other
 import Data.MineCraft.Pi.Player
 import Data.MineCraft.Pi.Types
 
-import Network.MineCraft.Pi.Client
+-- Most users would import @runMCPI@ from
+-- "Network.MineCraft.Pi.Client", but I want to allow
+-- debug messages.
+import Network.MineCraft.Pi.Client.Internal (MCPI, runMCPI')
+
+import System.Environment (getArgs, getProgName)
+import System.Exit (exitFailure)
+import System.IO
+
+import Utils (checkForDebug, maybeRead, printVersion)
 
 -- | Given x0,y0 and a radius, return all the block positions within
 --   the circle. We use the coordinate of each block to determine
@@ -84,22 +87,21 @@ flattenArea bType r = do
 
     liftIO $ putStrLn "Exiting from MineCraft"
 
-maybeRead :: Read a => String -> Maybe a
-maybeRead = fmap fst . listToMaybe . reads
-
 usage :: IO ()
 usage = do
     progName <- getProgName
-    hPutStrLn stderr $ "usage: " ++ progName ++ " [<radius>]"
+    hPutStrLn stderr $ "Usage: " ++ progName ++ " [--debug] [<radius>]"
     exitFailure
 
 main :: IO ()
 main = do
   args <- getArgs
-  case args of
-    [] -> runMCPI (flattenArea goldOre 5)
+  let (dbg, args') = checkForDebug args
+  when dbg printVersion
+  case args' of
+    [] -> runMCPI' dbg (flattenArea goldOre 5)
     [rstr] -> case maybeRead rstr of
-                  Just r -> runMCPI (flattenArea goldOre r)
+                  Just r -> runMCPI' dbg (flattenArea goldOre r)
                   _ -> usage
     _ -> usage
 
