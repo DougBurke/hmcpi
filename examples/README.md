@@ -4,10 +4,10 @@ Example programs
 There are several programs, illustrating some very *basic*
 interactions with MineCraft-PI.
 
-When called with the `--debug argument the programs will print,
+When called with the `--debug` argument the programs will print,
 to `stderr`, the messages they send to, and receive from, the
 MineCraft program. This is true for all the examples except for
-hmcpi.
+`hmcpi`.
 
 freefall
 --------
@@ -63,8 +63,8 @@ MineCraft. There is currently no attempt at providing a nicer
 interface, such as help, automatic completion of commands, or cleaning
 user input.
 
-Note that this program does not take use the mcpi library, since it
-is a low-level interface.
+Note that this program does not take use the `mcpi` library, since it
+is provides a direct connection to the MineCraft-Pi program.
 
 isongold
 --------
