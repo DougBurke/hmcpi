@@ -4,15 +4,15 @@ Example programs
 There are several programs, illustrating some very *basic*
 interactions with MineCraft-PI.
 
-When called with the --debug argument the programs will print,
-to stderr, the messages they send to, and receive from, the
+When called with the `--debug argument the programs will print,
+to `stderr`, the messages they send to, and receive from, the
 MineCraft program. This is true for all the examples except for
 hmcpi.
 
 freefall
 --------
 
-Source code: Freefall.hs 
+Source code: [Freefall.hs](https://github.com/DougBurke/hmcpi/blob/master/examples/Freefall.hs)
 
 Usage:
 
@@ -30,7 +30,7 @@ added quite easily.
 flatten
 -------
 
-Source code: Flatten.hs 
+Source code: [Flatten.hs](https://github.com/DougBurke/hmcpi/blob/master/examples/Flatten.hs)
 
 Usage:
 
@@ -48,7 +48,7 @@ supported, although this could be added by an enterprising programmer.
 hmcpi
 -----
 
-Source code: HMCPI.hs
+Source code: [HMCPI.hs](https://github.com/DougBurke/hmcpi/blob/master/examples/HMCPI.hs)
 
 Usage:
 
@@ -56,19 +56,20 @@ Usage:
     hmcpi < filename
 
 This provides a direct interface to MineCraft-PI. You enter the full
-commands, such as chat.post(Hello World!) or world.getBlock(0,0,0),
-and see the response from the game. The program is essentially telnet
-but specialized to only talk to MineCraft. There is currently no
-attempt at providing a nicer interface, such as help, automatic
-completion of commands, or cleaning user input.
+commands, such as `chat.post(Hello World!)` or
+`world.getBlock(0,0,0)`, and see the response from the game. The
+program is essentially telnet but specialized to only talk to
+MineCraft. There is currently no attempt at providing a nicer
+interface, such as help, automatic completion of commands, or cleaning
+user input.
 
-Note that this program does not take use the hmcpi library, since it
+Note that this program does not take use the mcpi library, since it
 is a low-level interface.
 
 isongold
 --------
 
-Source code: IsOnGold.hs
+Source code: [IsOnGold.hs](https://github.com/DougBurke/hmcpi/blob/master/examples/IsOnGold.hs)
 
 Usage:
 
@@ -79,7 +80,7 @@ Tells the user to look down if they are standing on a gold ore block.
 xjump
 -----
 
-Source code: XJump.hs
+Source code: [XJump.hs](https://github.com/DougBurke/hmcpi/blob/master/examples/XJump.hs)
 
 Usage:
 
