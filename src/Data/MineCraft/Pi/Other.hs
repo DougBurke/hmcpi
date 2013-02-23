@@ -46,3 +46,20 @@ chatPost msg = command "chat.post" [msg]
 getHeight :: IPos -> MCPI Int
 getHeight Pos {..} = fromMC `liftM` query "world.getHeight" [toMC _x, toMC _y]
  
+{-
+
+TODO:
+
+world.checkpoint.save()
+world.checkpoint.restore()
+
+world.setting(KEY,0/1)
+
+world.getPlayerIds()
+
+events.clear()
+events.block.hits() --> pos,surface,entityId|pos,surface,entityId|... 
+                        (pos is x,y,z surface is x,y,z, entityId is int)
+
+-}
+
