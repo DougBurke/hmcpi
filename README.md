@@ -41,5 +41,7 @@ main = do
     when flag $ putStrLn "Look down!"
 ```
 
-More examples are included in the examples/ directory.
+More examples are included in the 
+[examples/](https://github.com/DougBurke/hmcpi/blob/master/examples/)
+directory.
 
