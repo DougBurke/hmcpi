@@ -42,6 +42,9 @@ import System.IO
 -- | Represent a program that communicates with a MineCraft PI
 --   server.
 --
+--   /TODO:/ run a computation without automatically opening
+--         and closing the handle.
+--
 type MCPI = ReaderT ConnInfo IO
 
 -- | Connection information.
@@ -63,13 +66,16 @@ mcPort = "4711"
 -- | Open a connection to the Minecraft server or call
 --   exitFailure, after displaying an error message to @stderr@.
 --
+--   /TODO:/ Change the retun value to @Maybe ConnInfo@ and
+--           make this public.
 openMCPI ::
     Bool  -- ^ Set to @True@ to get debugging messages printed to @stderr@.
     -> IO ConnInfo
 openMCPI flag = do
     let ehdl :: CE.IOException -> IO ()
-        ehdl _ = hPutStrLn stderr "ERROR: Unable to connect to MineCraft-PI. Is it running?" >>
-                 exitFailure
+        ehdl _ = 
+           hPutStrLn stderr "ERROR: Unable to connect to MineCraft-PI. Is it running?" >>
+           exitFailure
        
     as <- getAddrInfo Nothing Nothing (Just mcPort)
     let a = head as -- note: getAddrInfo never returns an empty list
@@ -82,14 +88,18 @@ openMCPI flag = do
     return $ ConnInfo h flag
 
 -- | Close the connection.
+--
+--   /TODO:/ Make this public.
 closeMCPI :: ConnInfo -> IO ()
 closeMCPI = hClose . _ciHandle
 
 logMsg :: ConnInfo -> String -> String -> MCPI ()
 logMsg ConnInfo {..} hdr msg = 
-  when _ciDebug $ liftIO $ hPutStrLn stderr $ "*DBG*" ++ hdr ++ "*" ++ msg
+  when _ciDebug $ liftIO $ hPutStrLn stderr 
+                $ "[" ++ hdr ++ replicate (8 - length hdr) ' ' ++
+                  "] " ++ msg
 
--- It would be nice to do the argument marshalling here, i.e. have
+-- It might be nice to do the argument marshalling here, i.e. have
 -- something like @command :: Command -> [Argument] -> MCPI ()@
 -- which would be run like @command "player.setTile" [Pos 0 0 0]@,
 -- but I do not want to deal with heterogeneous lists at this time.
@@ -97,6 +107,28 @@ logMsg ConnInfo {..} hdr msg =
 --
 addArgs :: String -> [Argument] -> String
 addArgs a bs = a ++ "(" ++ intercalate "," bs ++ ")"
+
+{-
+-- | Remove any output from the handle. A debug message is written
+--   to let the user know this has happened, presumably because of
+--   a previous invalid call. The previous call could be stored in
+--   ConnInfo to make the message more useful, but leave that for now.
+--
+flushChannel :: ConnInfo -> IO ()
+flushChannel ConnInfo {..} = do
+
+Hmm, do I need the socket as well as the handle?
+
+        while True:
+            readable, _, _ = select.select([self.socket], [], [], 0.0)
+            if not readable:
+                break
+            data = self.socket.recv(1500)
+            e =  "Drained Data: <%s>\n"%data.strip()
+            e += "Last Message: <%s>\n"%self.lastSent.strip()
+            sys.stderr.write(e)
+
+-}
 
 -- | Run a MineCraft command. 
 command :: Command -> [Argument] -> MCPI ()
