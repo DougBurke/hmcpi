@@ -27,7 +27,7 @@ Tested-With:    GHC==7.4.1
 Cabal-Version:  >= 1.8
 Build-Type:     Simple
 
-Data-Files:     examples/README
+Data-Files:     examples/README.md
                 examples/*.hs
 
 source-repository  head
