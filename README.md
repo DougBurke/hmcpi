@@ -41,7 +41,48 @@ main = do
     when flag $ putStrLn "Look down!"
 ```
 
-More examples are included in the 
+Building
+--------
+
+ * Install ghc and the Haskell platform
+
+        sudo apt-get install ghc haskell-platform
+
+ * Download the package
+
+        cabal unpack mcpi
+
+   which will create the directory `mcpi-<version>`. If you instead
+   say
+
+        cabal install mcpi
+
+   then the package will be built and installed into the system; by
+   using `unpack` you just build a local copy.
+
+ * Build the package
+
+        cd mcpi-<version>
+        cabal configure
+        cabal build
+
+   You may need to install the `pipes` package before the above
+   will run:
+
+        cabal install pipes
+
+ * Run one of the examples
+
+        ./dist/build/isongold/isongold 
+
+Examples
+--------
+
+Several examples are included in the 
 [examples/](https://github.com/DougBurke/hmcpi/blob/master/examples/)
-directory.
+directory. They are built, and installed, by default. To avoid
+building them tun off the `build-examples` flag at configure time by
+saying
+
+    cabal configure -f-build-examples
 
