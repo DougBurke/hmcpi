@@ -38,6 +38,10 @@ Flag build-examples
   Description: Build the example programs (defaults to True)
   Default:     True
 
+Flag build-debug
+  Description: Build programs for debugging the module (defaults to False)
+  Default:     False
+
 Library
    Build-Depends:
       base >=3 && < 5,
@@ -59,6 +63,7 @@ Library
    ghc-options:
       -Wall
 
+-- Examples
 Executable         flatten
    if !flag(build-examples)
      Buildable: False
@@ -95,24 +100,6 @@ Executable         freefall
       mcpi,
       transformers
 
-Executable         hmcpi
-   if !flag(build-examples)
-     Buildable: False
-
-   Main-Is:        HMCPI.hs
-   Hs-Source-Dirs: examples/ 
-
-   Other-Modules:  Paths_mcpi
-                   Utils
-
-   ghc-options:
-      -Wall
-
-   Build-Depends:
-      base,
-      network,
-      pipes >= 3.0 && < 3.2
-
 Executable         isongold
    if !flag(build-examples)
      Buildable: False
@@ -147,8 +134,27 @@ Executable         xjump
       base,
       mcpi
 
+-- Debug programs
+Executable         hmcpi
+   if !flag(build-debug)
+     Buildable: False
+
+   Main-Is:        HMCPI.hs
+   Hs-Source-Dirs: examples/ 
+
+   Other-Modules:  Paths_mcpi
+                   Utils
+
+   ghc-options:
+      -Wall
+
+   Build-Depends:
+      base,
+      network,
+      pipes >= 3.0 && < 3.2
+
 Executable         debugmcpi
-   if !flag(build-examples)
+   if !flag(build-debug)
      Buildable: False
 
    Main-Is:        DebugMCPI.hs

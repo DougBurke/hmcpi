@@ -11,7 +11,9 @@ Queries now raise an `IOError` if they return the message `Fail` (it
 could also be due to the previous command failing if the buffer
 flush mentioned above did not catch the error).
 
-Added the debugmcpi example.
+Added the debugmcpi example. This is now built, along with hmcpi,
+by setting the build-debug configure option (which is turned off
+by default).
 
 Version 0.0.0.3
 ===============

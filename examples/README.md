@@ -6,8 +6,17 @@ interactions with MineCraft-PI.
 
 When called with the `--debug` argument the programs will print,
 to `stderr`, the messages they send to, and receive from, the
-MineCraft program. This is true for all the examples except for
-`hmcpi`.
+MineCraft program. 
+
+These programs are built by setting the `build-examples` flag,
+which is set by default, so either of the following will work
+
+    cabal configure
+    cabal configure -fbuild-examples
+
+To avoid building the programs, use:
+
+    cabal configure -f-build-examples
 
 freefall
 --------
@@ -67,6 +76,16 @@ Usage:
 
 Move the player by 10 tiles in the X direction if the tile is not
 filled.
+
+Debug programs
+==============
+
+The following are useful when trying to debug the module.
+
+These programs are built by setting the `build-debug` flag,
+which is *not* set by default:
+
+    cabal configure -fbuild-debug
 
 hmcpi
 -----
