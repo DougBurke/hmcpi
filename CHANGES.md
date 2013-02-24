@@ -4,11 +4,14 @@ Version 0.0.0.4
 An initial attempt at handling invalid commands has been added by
 flushing the connection buffer each time a command or query is sent.
 This involves adding a small pause after making a command call to
-allow MineCraft to respond with a failure message.
+allow MineCraft to respond with a failure message, although it does
+not work reliably.
 
 Queries now raise an `IOError` if they return the message `Fail` (it
 could also be due to the previous command failing if the buffer
 flush mentioned above did not catch the error).
+
+Added the debugmcpi example.
 
 Version 0.0.0.3
 ===============

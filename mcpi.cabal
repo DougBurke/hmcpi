@@ -146,3 +146,21 @@ Executable         xjump
    Build-Depends:
       base,
       mcpi
+
+Executable         debugmcpi
+   if !flag(build-examples)
+     Buildable: False
+
+   Main-Is:        DebugMCPI.hs
+   Hs-Source-Dirs: examples/ 
+
+   Other-Modules:  Paths_mcpi
+                   Utils
+
+   ghc-options:
+      -Wall
+
+   Build-Depends:
+      base,
+      mcpi,
+      transformers

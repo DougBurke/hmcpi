@@ -45,27 +45,6 @@ of, behind, and to the side of the player.
 There is no check that the blocks that are added are actually
 supported, although this could be added by an enterprising programmer.
 
-hmcpi
------
-
-Source code: [HMCPI.hs](https://github.com/DougBurke/hmcpi/blob/master/examples/HMCPI.hs)
-
-Usage:
-
-    hmcpi
-    hmcpi < filename
-
-This provides a direct interface to MineCraft-PI. You enter the full
-commands, such as `chat.post(Hello World!)` or
-`world.getBlock(0,0,0)`, and see the response from the game. The
-program is essentially telnet but specialized to only talk to
-MineCraft. There is currently no attempt at providing a nicer
-interface, such as help, automatic completion of commands, or cleaning
-user input.
-
-Note that this program does not take use the `mcpi` library, since it
-is provides a direct connection to the MineCraft-Pi program.
-
 isongold
 --------
 
@@ -88,3 +67,44 @@ Usage:
 
 Move the player by 10 tiles in the X direction if the tile is not
 filled.
+
+hmcpi
+-----
+
+Source code: [HMCPI.hs](https://github.com/DougBurke/hmcpi/blob/master/examples/HMCPI.hs)
+
+Usage:
+
+    hmcpi
+    hmcpi < filename
+
+This provides a direct interface to MineCraft-PI. You enter the full
+commands, such as `chat.post(Hello World!)` or
+`world.getBlock(0,0,0)`, and see the response from the game. The
+program is essentially telnet but specialized to only talk to
+MineCraft. There is currently no attempt at providing a nicer
+interface, such as help, automatic completion of commands, or cleaning
+user input.
+
+Note that this program does not take use the `mcpi` library, since it
+is provides a direct connection to the MineCraft-Pi program.
+
+debugmcpi
+---------
+
+Source code: [DebugMCPI.hs](https://github.com/DougBurke/hmcpi/blob/master/examples/DebugMCPI.hs)
+
+Usage:
+
+    debugmcpi
+
+This provides a simple interface for sending commands and queries
+to MineCraft. It differs from hmcpi in that you do not talk
+directly to MineCraft, instead you have the following commands
+
+  exit
+  quit
+  command name [arg1 .. argn]
+  query name [arg1 .. argn]
+
+Everything is treated as a string.
