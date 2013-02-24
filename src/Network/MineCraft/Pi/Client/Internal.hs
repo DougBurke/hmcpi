@@ -28,7 +28,7 @@ import qualified Control.Exception as CE
 
 import Control.Concurrent (threadDelay)
 import Control.Exception (bracket)
-import Control.Monad (when)
+import Control.Monad (unless, when)
 import Control.Monad.IO.Class
 import Control.Monad.Trans.Reader
 
@@ -112,21 +112,18 @@ closeMCPI = hClose . _ciHandle
 --
 logMsg ::
   ConnInfo
-  -> String  -- ^ The type of message (should be 8 characters or less to
-             --   keep the output aligned, but can be larger.
+  -> String  -- ^ The type of message (ideally 8 characters or less to
+             --   keep the output aligned, but can be larger). Trailing
+             --   white space is ignored.
   -> String  -- ^ The message to display.
   -> IO ()
 logMsg ConnInfo {..} hdr msg = 
   when _ciDebug $ hPutStrLn stderr 
                 $ "[" ++ hdr ++ replicate (8 - length hdr) ' ' ++
-                  "] " ++ msg
+                  "] " ++ reverse (dropWhile isSpace (reverse msg))
 
--- | It might be nice to do the argument marshalling here, i.e. have
---   something like @command :: Command -> [Argument] -> MCPI ()@
---   which would be run like @command "player.setTile" [Pos 0 0 0]@,
---   but I do not want to deal with heterogeneous lists at this time.
---   Instead, we force the caller to do the conversion.
---
+-- | Add arguments to a query or command to create the
+--   string to send to MineCraft.
 addArgs :: String -> [Argument] -> String
 addArgs a bs = a ++ "(" ++ intercalate "," bs ++ ")"
 
@@ -151,15 +148,12 @@ flushChannel ci@ConnInfo {..} = do
   -- so probably not an issue.
   fbuf <- mallocForeignPtrBytes bufSize 
   withForeignPtr fbuf $ \bufPtr -> 
-    -- No attempt to reconstruct the message if it requires
-    -- multiple calls. Could be easily added.
-    let loop = do
+    let loop store = do
           nrec <- hGetBufNonBlocking _ciHandle bufPtr bufSize
-          when (nrec > 0) $ do
-            str <- peekCStringLen (bufPtr, nrec)
-            logMsg ci "FLUSH" str
-            loop
-    in loop
+          if (nrec > 0)
+            then peekCStringLen (bufPtr, nrec) >>= \str -> loop (store ++ str)
+            else unless (null store) $ logMsg ci "FLUSH" store
+    in loop []
 
 -- | Run a MineCraft command. There is a pause after making the command,
 --   which is an attempt to allow any invalid commands to return a
