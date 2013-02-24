@@ -33,10 +33,14 @@ xshift :: Int -> [Shape] -> [Shape]
 data Circle = Circle { circleShape :: [Shape], ... }
 ```
 
+An alternative is an approach like the
+[diagrams package](http://hackage.haskell.org/package/diagrams).
+
 * Is the current MCPI monad sufficient?
 
 Do we want to allow the user to know that there is no running
-MineCraft-PI program, rather than just exiting?
+MineCraft-PI program, rather than just exiting? It probably
+makes sense to expose the open/close connection primitives.
 
 Is it worth using operational, or a Free Monad, here?
 
