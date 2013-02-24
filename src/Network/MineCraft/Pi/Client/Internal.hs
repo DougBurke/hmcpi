@@ -32,6 +32,7 @@ import Control.Monad (unless, when)
 import Control.Monad.IO.Class
 import Control.Monad.Trans.Reader
 
+import Data.Char (isSpace)
 import Data.List (intercalate)
 
 import Foreign
