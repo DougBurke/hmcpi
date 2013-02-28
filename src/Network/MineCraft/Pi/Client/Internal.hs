@@ -26,7 +26,6 @@ module Network.MineCraft.Pi.Client.Internal
 
 import qualified Control.Exception as CE
 
-import Control.Concurrent (threadDelay)
 import Control.Exception (bracket)
 import Control.Monad (unless, when)
 import Control.Monad.IO.Class
@@ -62,9 +61,6 @@ data ConnInfo = ConnInfo {
       _ciHandle :: Handle  -- ^ Connection to the MineCraft program
     , _ciDebug :: Bool     -- ^ Should messages to and from MineCraft
                            --   be printed to @stderr@.
-    , _ciDelay :: Int      -- ^ Delay, in microseconds, to wait after
-                           --   making a call with `command` before
-                           --   returning. *Experimental*
     }
 
 -- | Commands do not return anything, queries do.
@@ -82,10 +78,9 @@ mcPort = "4711"
 --   /TODO:/ Change the retun value to @Maybe ConnInfo@ and
 --           make this public.
 openMCPI ::
-  Int      -- ^ Delay, in microseconds, to wait after making a `command`.
-  -> Bool  -- ^ Set to @True@ to get debugging messages printed to @stderr@.
+  Bool  -- ^ Set to @True@ to get debugging messages printed to @stderr@.
   -> IO ConnInfo
-openMCPI delay flag = do
+openMCPI flag = do
     let ehdl :: CE.IOException -> IO ()
         ehdl _ = 
            hPutStrLn stderr "ERROR: Unable to connect to MineCraft-PI. Is it running?" >>
@@ -100,7 +95,7 @@ openMCPI delay flag = do
     h <- socketToHandle sock ReadWriteMode
     hSetBuffering h LineBuffering
 
-    return $ ConnInfo h flag delay
+    return $ ConnInfo h flag
 
 -- | Close the connection.
 --
@@ -156,10 +151,7 @@ flushChannel ci@ConnInfo {..} = do
             else unless (null store) $ logMsg ci "FLUSH" store
     in loop []
 
--- | Run a MineCraft command. There is a pause after making the command,
---   which is an attempt to allow any invalid commands to return a
---   message, so that it can be handled by the next call of `command`
---   or `query`. This approach is *experimental* and may change.
+-- | Run a MineCraft command.
 command :: Command -> [Argument] -> MCPI ()
 command comm args = do
   ci <- ask
@@ -168,7 +160,6 @@ command comm args = do
     flushChannel ci
     >> logMsg ci "COMMAND" commstr
     >> hPutStrLn (_ciHandle ci) commstr
-    >> threadDelay (_ciDelay ci)
 
 -- | Run a MineCraft query, returning the response. An
 --   @IOError@ is raised if the response is @Fail@ (this
@@ -189,10 +180,6 @@ query qry args = do
     liftIO $ ioError $ userError $ "Query failed: " ++ qryStr
   return ans
 
--- | Try a 0.1 second delay.
-testDelay :: Int
-testDelay = 100000
-
 -- | Run a Raspberry-PI program. The flag determines whether the
 --   messages sent to, and received from, the server, are
 --   printed to @stderr@ as a diagnostic.
@@ -202,7 +189,7 @@ testDelay = 100000
 runMCPI' :: Bool -> MCPI a -> IO a
 runMCPI' flag p = 
   bracket
-    (openMCPI testDelay flag)
+    (openMCPI flag)
     closeMCPI
     (runReaderT p)
 
