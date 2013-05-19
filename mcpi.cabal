@@ -1,5 +1,5 @@
 Name:           mcpi
-Version:        0.0.0.4
+Version:        0.0.0.5
 Homepage:       https://github.com/DougBurke/hmcpi
 Bug-Reports:    https://github.com/DougBurke/hmcpi/issues
 Stability:      experimental
@@ -133,6 +133,21 @@ Executable         xjump
    Build-Depends:
       base,
       mcpi
+
+Executable         shapes
+   if !flag(build-examples)
+     Buildable: False
+
+   Main-Is:        Shapes.hs
+   Hs-Source-Dirs: examples/ 
+
+   ghc-options:
+      -Wall
+
+   Build-Depends:
+      base,
+      mcpi,
+      transformers
 
 -- Debug programs
 Executable         hmcpi
