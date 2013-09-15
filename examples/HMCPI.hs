@@ -32,9 +32,11 @@ import qualified Control.Exception as CE
 
 import Control.Concurrent (forkIO)
 import Control.Monad (when)
-import Control.Proxy
 
 import Network (PortID (..), connectTo)
+
+import Pipes
+import qualified Pipes.Prelude as P
 
 import System.Environment (getArgs, getProgName)
 import System.Exit (exitFailure)
@@ -57,16 +59,16 @@ import Utils (printVersion)
 --
 pipeTo :: Handle -> Handle -> IO ()
 pipeTo inHdl outHdl =
-    runProxy $ hGetLineS inHdl >-> hPutStrLnD outHdl
+    runEffect $ P.fromHandle inHdl >-> P.toHandle outHdl
 
 {- How best to handle a user exit? Need to signal to the
    main program that we have finished
 
 pipeToWithExit :: Handle -> Handle -> IO ()
 pipeToWithExit inHdl outHdl =
-    runProxy $ hGetLineS inHdl >->
-               takeWhileD ('\EOT' `notElem`) >->
-               hPutStrLnD outHdl
+    runEffect $ P.fromHandle inHdl >->
+                P.takeWhile ('\EOT' `notElem`) >->
+                P.toHandle outHdl
 
 -}
 
