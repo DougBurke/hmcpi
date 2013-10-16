@@ -1,3 +1,9 @@
+Version 0.0.1.0
+===============
+
+Updated to use pipes version 4; there is no change in the
+library API (pipes is only used by the hmcpi executable).
+
 Version 0.0.0.4
 ===============
 
