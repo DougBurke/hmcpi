@@ -57,8 +57,8 @@ userInteract = do
 --   @query@ rather than handle the output here.
 handleUser :: String -> MCPI ()
 handleUser [] = return ()
-handleUser "quit" = liftIO $ exitSuccess
-handleUser "exit" = liftIO $ exitSuccess
+handleUser "quit" = liftIO exitSuccess
+handleUser "exit" = liftIO exitSuccess
 handleUser user = 
   case words user of
     ("command":comm:args) -> command comm args

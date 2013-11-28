@@ -1,5 +1,23 @@
 {-# LANGUAGE RecordWildCards #-}
 
+{-
+License:
+
+This code is placed in the Public Domain.
+
+Author:
+
+Douglas Burke (dburke.gw@gmail.com)
+
+Usage:
+
+  ./shapes
+
+Every second, report the block type that the user is standing on
+if it is different than the last report.
+
+-}
+
 module Main where
 
 import Control.Concurrent (threadDelay)
@@ -75,7 +93,7 @@ makePyramid bt Pos {..} w =
 
 renderShape :: Shapes -> MCPI ()
 renderShape = 
-  let rs (BlockList bt pos) = mapM_ (\p -> setBlock p bt) pos
+  let rs (BlockList bt pos) = mapM_ (`setBlock` bt) pos
       rs (BlockCuboid bt p1 p2) = setBlocks p1 p2 bt
   in mapM_ rs
 
@@ -117,7 +135,7 @@ showBlocksAsWall = do
   Pos {..} <- getPlayerTile
   let x1 = _x - 128
       y1 = _y + 20      
-  setBlocks (Pos x1 y1 (_z-1)) (Pos (x1+255) (y1+4) (_z+1)) $ sandstone
+  setBlocks (Pos x1 y1 (_z-1)) (Pos (x1+255) (y1+4) (_z+1)) sandstone
   
   forM_ [0..255] $ \ctr ->
     setBlocks 
@@ -135,7 +153,7 @@ showBlocksAsFloor = do
       x2 = x1 + 2 * hw
       y2 = y1 + 2 * hw
       z = _z - 1
-  setBlocks (Pos x1 y1 (z-1)) (Pos x2 y2 (z-1)) $ sandstone
+  setBlocks (Pos x1 y1 (z-1)) (Pos x2 y2 (z-1)) sandstone
   
   forM_ [0..15] $ \j ->
     let ys = y1 + j * w
@@ -150,7 +168,6 @@ showBlocksAsFloor = do
          (Pos xe ye z)
          $ BlockType ctr
 
--- TODO: report only when block data differs
 reportBlock :: MCPI ()
 reportBlock = 
   let go oPos = do

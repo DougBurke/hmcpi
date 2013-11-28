@@ -146,7 +146,7 @@ flushChannel ci@ConnInfo {..} = do
   withForeignPtr fbuf $ \bufPtr -> 
     let loop store = do
           nrec <- hGetBufNonBlocking _ciHandle bufPtr bufSize
-          if (nrec > 0)
+          if nrec > 0
             then peekCStringLen (bufPtr, nrec) >>= \str -> loop (store ++ str)
             else unless (null store) $ logMsg ci "FLUSH" store
     in loop []
