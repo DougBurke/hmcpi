@@ -1,3 +1,11 @@
+Version 0.0.1.1
+===============
+
+Renamec the change log from CHANGES.md to CHANGELOG so
+that Hackage will display it.
+
+Minor HLint changes (no change in behavior or API).
+
 Version 0.0.1.0
 ===============
 

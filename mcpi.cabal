@@ -1,5 +1,5 @@
 Name:           mcpi
-Version:        0.0.1.0
+Version:        0.0.1.1
 Homepage:       https://github.com/DougBurke/hmcpi
 Bug-Reports:    https://github.com/DougBurke/hmcpi/issues
 Stability:      experimental
@@ -20,17 +20,18 @@ Description:
   as well as a program that lets you interact with MineCraft directly.
   .
   Please see the TODO.md file in the source code for an incomplete
-  list of possible changes, and the CHANGES.md file for changes
+  list of possible changes, and the CHANGELOG file for changes
   in the module.
 
 Tested-With:    GHC==7.4.1
 Cabal-Version:  >= 1.8
 Build-Type:     Simple
 
-Data-Files:     examples/README.md
-                examples/*.hs
+Extra-Source-Files:     CHANGELOG
+                        examples/README.md
+                        examples/*.hs
 
-source-repository  head
+Source-Repository  head
   type:            git
   location:        git://github.com/DougBurke/hmcpi.git
 
