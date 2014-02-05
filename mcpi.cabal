@@ -167,7 +167,7 @@ Executable         hmcpi
    Build-Depends:
       base,
       network,
-      pipes >= 4.0 && < 4.1
+      pipes >= 4.0 && < 4.2
 
 Executable         debugmcpi
    if !flag(build-debug)
