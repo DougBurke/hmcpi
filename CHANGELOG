@@ -1,7 +1,12 @@
+Version 0.0.1.2
+===============
+
+Updated pipes upper bound (thanks to Gabriel Gonzalez).
+
 Version 0.0.1.1
 ===============
 
-Renamec the change log from CHANGES.md to CHANGELOG so
+Renamed the change log from CHANGES.md to CHANGELOG so
 that Hackage will display it.
 
 Minor HLint changes (no change in behavior or API).
